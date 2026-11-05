@@ -1,0 +1,75 @@
+plugins {
+    id 'fabric-loom' version '1.11.8'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(project.java_version.toInteger())
+    }
+    withSourcesJar()
+}
+
+// Keep optional upstream mod integrations available to compile without shipping them.
+ext.includeMod = { String dependencyNotation ->
+    dependencies.modApi(dependencyNotation) {
+        exclude(group: 'net.fabricmc.fabric-api')
+    }
+    dependencies.include(dependencyNotation) {
+        exclude(group: 'net.fabricmc.fabric-api')
+    }
+}
+
+repositories {
+    maven { url 'https://maven.terraformersmc.com/' } // Required for Mod Menu and Terraform APIs
+    maven { url 'https://maven.shedaniel.me/' }       // Required for Cloth Config
+    maven { url 'https://maven.ryanliptak.com/' }     // Required for AppleSkin
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    includeMod "com.terraformersmc.terraform-api:terraform-shapes-api-v1:${terraform_shapes_version}"
+    includeMod "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_version}"
+
+    includeMod "me.shedaniel.cloth:cloth-config-fabric:${cloth_version}"
+
+    modApi("com.terraformersmc:modmenu:${modmenu_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modApi "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
+    modApi("squeek.appleskin:appleskin-fabric:${appleskin_version}") {
+        exclude module: 'modmenu'
+    }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/dawn.accesswidener")
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = project.java_version.toInteger()
+}
+
+jar {
+    from('LICENSE.md') {
+        rename { "${it}_dawn_api" }
+    }
+}

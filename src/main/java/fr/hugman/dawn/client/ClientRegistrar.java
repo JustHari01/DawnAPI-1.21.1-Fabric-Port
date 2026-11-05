@@ -1,0 +1,54 @@
+package fr.hugman.dawn.client;
+
+import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
+import com.terraformersmc.terraform.sign.api.SpriteIdentifierRegistry;
+import com.terraformersmc.terraform.sign.api.block.TerraformHangingSignBlock;
+import com.terraformersmc.terraform.sign.api.block.TerraformSignBlock;
+import fr.hugman.dawn.block.DawnBoatType;
+import fr.hugman.dawn.block.SignBlocks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.AbstractSignBlock;
+import net.minecraft.client.render.TexturedRenderLayers;
+import net.minecraft.client.util.SpriteIdentifier;
+
+@Environment(EnvType.CLIENT)
+public class ClientRegistrar {
+	public static void add(DawnBoatType boatType) {
+		TerraformBoatClientHelper.registerModelLayers(boatType.id());
+	}
+
+	public static void add(DawnBoatType... boatTypes) {
+		for(DawnBoatType boatType : boatTypes) {
+			add(boatType);
+		}
+	}
+
+	public static void add(AbstractSignBlock sign) {
+		if(sign instanceof TerraformSignBlock terraSign) {
+			SpriteIdentifierRegistry.INSTANCE.addIdentifier(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, terraSign.getTexture()));
+		}
+		else if(sign instanceof TerraformHangingSignBlock terraSign) {
+			SpriteIdentifierRegistry.INSTANCE.addIdentifier(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, terraSign.getTexture()));
+		}
+		else {
+			throw new IllegalArgumentException("Only Terraform API signs may be registered via this method.");
+		}
+	}
+
+	public static void add(AbstractSignBlock... signs) {
+		for(AbstractSignBlock sign : signs) {
+			add(sign);
+		}
+	}
+
+	public static void add(SignBlocks signs) {
+		add(signs.sign(), signs.hangingSign());
+	}
+
+	public static void add(SignBlocks... signss) {
+		for(SignBlocks signs : signss) {
+			add(signs);
+		}
+	}
+}
