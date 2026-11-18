@@ -24,6 +24,10 @@ Run `gradlew.bat remapJar` on Windows or `./gradlew remapJar` elsewhere. The dis
 
 This port retains the upstream license and attribution. Changes in this repository are compatibility work for Minecraft 1.21.1; the upstream project remains the work of its original authors.
 
+## Bundled dependencies
+
+The release JAR embeds Cloth Config Fabric, Cloth Basic Math, Terraform Shapes API, and Terraform Wood API. Their separate licenses and source links are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), and the license texts are included in the JAR under META-INF/licenses.
+
 ## AI assistance
 
 AI assistance contributed substantially to adapting the code for Minecraft 1.21.1 and preparing this repository documentation. The upstream source and its authors are credited above.
