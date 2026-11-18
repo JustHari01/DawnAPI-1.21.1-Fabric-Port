@@ -20,13 +20,16 @@ Run `gradlew.bat remapJar` on Windows or `./gradlew remapJar` elsewhere. The dis
 ## Upstream and license
 
 - Upstream source and attribution: [DawnTeamMC/DawnAPI at v5.0.0](https://github.com/DawnTeamMC/DawnAPI/tree/v5.0.0)
-- License: [GNU Lesser General Public License v3.0 only](LICENSE.md)
+- Exact source commit: `0fc156316f671adb1f0158c6d1b22f3218978fc8`
+- License for that tagged snapshot: [GNU Lesser General Public License v3.0 only](LICENSE.md)
 
-This port retains the upstream license and attribution. Changes in this repository are compatibility work for Minecraft 1.21.1; the upstream project remains the work of its original authors.
+This port uses that exact tagged snapshot and its included LGPL license text. The current upstream project page may report different terms for later material; this repository makes no licensing claim about later upstream versions. Changes here are compatibility work for Minecraft 1.21.1. The upstream project remains the work of its original authors.
+
+The port replaces the upstream logo with a separate icon made for this port.
 
 ## Bundled dependencies
 
-The release JAR embeds Cloth Config Fabric, Cloth Basic Math, Terraform Shapes API, and Terraform Wood API. Their separate licenses and source links are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), and the license texts are included in the JAR under META-INF/licenses.
+The release JAR embeds Cloth Config Fabric, Cloth Basic Math, Terraform Shapes API, and Terraform Wood API. Their separate licenses and source links are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), and the license texts are included in the JAR under `META-INF/licenses/`.
 
 ## AI assistance
 
